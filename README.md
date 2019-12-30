@@ -1,6 +1,6 @@
-# guyuan
+# bigdata
 
-> one project
+> 第一次提交：通过父组件传值到子组件，分派动态id给子组件，循环多个图表
 
 ## Build Setup
 
