@@ -26,7 +26,16 @@
                     ></bill-class>
                 </div>
             </el-col>
-            <el-col :span="9"><div class="grid-content bg-purple-light"></div></el-col>
+            <el-col :span="8">
+                <pie-echarts
+                 class="map-box map"
+                 v-for = "(item,index) in billClass"
+                 :key = "index"
+                 :idcode = "index"
+                 :loading="timeLoading"
+                 :option="timeLineOption">
+                </pie-echarts>
+            </el-col>
             <el-col :span="8"><div class="grid-content bg-purple"></div></el-col>
         </el-row>
     </el-main>
@@ -34,12 +43,22 @@
 
 <script>
 import BillClass from '../components/BillClass'
+import LineCharts from '../components/LineCharts'
+import PieEcharts from '../components/PieEcharts'
 
 export default {
-    components:{BillClass},
+    components:{
+        BillClass,
+        LineCharts,
+        PieEcharts
+    },
     name: 'index',
     data() {
-        return {
+        return {  
+            colors:["#EAEA26", "#906BF9", "#FE5656", "#01E17E", "#3DD1F9", "#FFAD05"],
+            timeLineOption: {},
+            timeLoading: false, 
+            bill:[],
             "billClass":[{
                 id:0,
                 "bill":[
@@ -79,26 +98,147 @@ export default {
                 for(let j in this.billClass[i].bill){
                     total += this.billClass[i].bill[j].value
                 }
-                 
             }
             return total 
-        }
+        },
     },
     created() {
         console.log(this.billClass[0].bill)
     },
     mounted() {
-
+        this.setLineOption(this.bill)
+        this.bills()
     },
     methods: {
-        
+        bills () {
+            var _this = this 
+            for(let i in this.billClass){
+                _this.bill = billClass[index].bill
+            }
+        },
+       setLineOption(bill) {
+            this.timeLineOption = {
+                color: this.colors,
+                grid: {
+                    left: -100,
+                    top: 50,
+                    bottom: 10,
+                    right: 10,
+                    containLabel: true
+                },
+                tooltip: {
+                    trigger: 'item',
+                    formatter: "{b} : {c} ({d}%)"
+                },
+                polar: {},
+                angleAxis: {
+                    interval: 2,
+                    type: 'category',
+                    data: [],
+                    z: 10,
+                    axisLine: {
+                        show: false,
+                        
+                    },
+                    axisLabel: {
+                        interval: 0,
+                        show: true,
+                        color: "#0B4A6B",
+                        margin: 8,
+                        fontSize: 16
+                    },
+                },
+                radiusAxis: {
+                    show:false,
+                    min: 60,
+                    max: 120,
+                    interval: 20,
+                    axisLine: {
+                        show: false,
+                        lineStyle: {
+                            color: "#0B3E5E",
+                            width: 1,
+                            type: "solid"
+                        },
+                    },
+                    axisLabel: {
+                        formatter: '{value} %',
+                        show: false,
+                        padding: [0, 0, 20, 0],
+                        color: "#0B3E5E",
+                        fontSize: 16
+                    },
+                    splitLine: {
+                        lineStyle: {
+                            color: "#0B3E5E",
+                            width: 2,
+                            type: "solid",
+                        }
+                    }
+                },
+                calculable: true,
+                series: [{
+                        name:'账单分类',
+                        type: 'pie',
+                        radius: ["15%", "30%"],
+                        hoverAnimation: false,
+                        labelLine: {
+                            normal: {
+                                show: false,
+                                length: 25,
+                                length2: 50
+                            },
+                            emphasis: {
+                                show: false
+                            }
+                        },
+                        data: [{
+                            name: '',
+                            value: 0,
+                            itemStyle: {
+                                normal: {
+                                    color: "#0B4A6B"
+                                }
+                            }
+                        }]
+                    },{
+                        stack: 'a',
+                        type: 'pie',
+                        radius: ['20%', '80%'],
+                        roseType: 'area',
+                        zlevel:10,
+                        label: {
+                            normal: {
+                                show: true,
+                                formatter: "{b}"+"{c}",
+                                textStyle: {
+                                    fontSize: 12,
+                                },
+                                position: 'outside'
+                            },
+                            emphasis: {
+                                show: true
+                            }
+                        },
+                        labelLine: {
+                            normal: {
+                                show: true,
+                                length: 0,
+                                length2: 15
+                            },
+                            emphasis: {
+                                show: false
+                            }
+                        },
+                        data: bill
+                    }, ]
+            }
+        },
     }
 };
 </script>
 
 <style scoped>
-    /* 党建概况 */
-   
     .map-box{
         width: 50%;
         min-height: 350px;

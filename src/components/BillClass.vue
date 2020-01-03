@@ -5,6 +5,8 @@
 </template>
 
 <script>
+// 引入基本模板
+
 export default {
     //props接受父组件传下来的数据，通过computed拼接每一个图表的id
     props:[

@@ -5,12 +5,14 @@ import "../assets/css/index.css"
 
 import login from '@/pages/login'
 import Index from '@/pages/index'
+import Index1 from '@/pages/Index1'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
-    {path:'/',name:'index',component:Index},
+    {path:'/',name:'index1',component:Index1},
+    {path:'/index',name:'index',component:Index},
     {path:'/login',name:'login',component:login},
     {path:'*',redirect:'/'}
   ]
