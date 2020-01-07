@@ -40,7 +40,6 @@ export default {
     methods: {
         echartLoad(){
             let echarts = this.echarts.init(document.getElementById(this.echartsId));
-            let echartsid = document.getElementById(this.echartsId)
             echarts.setOption({
                 color: this.colors,
                 grid: {
