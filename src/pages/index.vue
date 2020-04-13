@@ -1,7 +1,7 @@
 <template>
     <el-main>
         <el-row>
-            <el-col :span="7">
+            <el-col :span="6">
                 <div class="map-left">
                     <ul class="gk-zuzhi-list" >
                         <li class="gk-zuzhi-item dj-flex"
@@ -19,24 +19,26 @@
                             </ul>
                         </li>
                     </ul>
-                    <bill-class 
-                    v-for = "(item,index) in billClass" 
-                    :key="index" :billClass = billClass[index].bill
-                    :idCode = "index"
-                    ></bill-class>
                 </div>
             </el-col>
-            <el-col :span="8">
-                <pie-echarts
+            <el-col :span="12">
+                <china-map1></china-map1>
+            </el-col>
+            <el-col :span="6">
+                <!-- <pie-echarts
                  class="map-box map"
                  v-for = "(item,index) in billClass"
                  :key = "index"
                  :idcode = "index"
                  :loading="timeLoading"
                  :option="timeLineOption">
-                </pie-echarts>
+                </pie-echarts> -->
+                 <bill-class 
+                v-for = "(item,index) in billClass" 
+                :key="index" :billClass = billClass[index].bill
+                :idCode = "index"
+                ></bill-class>
             </el-col>
-            <el-col :span="8"><div class="grid-content bg-purple"></div></el-col>
         </el-row>
     </el-main>
 </template>
@@ -44,13 +46,15 @@
 <script>
 import BillClass from '../components/BillClass'
 import LineCharts from '../components/LineCharts'
-import PieEcharts from '../components/PieEcharts'
+// import PieEcharts from '../components/PieEcharts'
+import ChinaMap1 from '../components/ChinaMap1'
 
 export default {
     components:{
         BillClass,
         LineCharts,
-        PieEcharts
+        ChinaMap1,
+        // PieEcharts
     },
     name: 'index',
     data() {
@@ -59,34 +63,34 @@ export default {
             timeLineOption: {},
             timeLoading: false, 
             bill:[],
-            "billClass":[{
+            billClass:[{
                 id:0,
                 "bill":[
-                    {value: 10,name: '餐饮美食'},
-                    {value: 5,name: '服饰美容'},
-                    {value: 15,name: '生活用品'},
+                    {value: 100,name: '餐饮美食'},
+                    {value: 52,name: '服饰美容'},
+                    {value: 65,name: '生活用品'},
                     {value: 25,name: '日常缴费'},
                     {value: 20,name: '交通出行'},
-                    {value: 35,name: '休闲娱乐'}
+                    {value: 3,name: '休闲娱乐'}
                     ]
                 },
                 {id:1,
                 "bill":[
-                    {value: 10,name: '餐饮美食'},
-                    {value: 5,name: '服饰美容'},
-                    {value: 13,name: '生活用品'},
-                    {value: 26,name: '日常缴费'},
-                    {value: 22,name: '交通出行'},
-                    {value: 39,name: '休闲娱乐'}
+                    {value: 50,name: '餐饮美食'},
+                    {value: 29,name: '服饰美容'},
+                    {value: 10,name: '生活用品'},
+                    {value: 59,name: '日常缴费'},
+                    {value: 29,name: '交通出行'},
+                    {value: 20,name: '休闲娱乐'}
                     ]},
                 {id:2,
                 "bill":[
-                    {value: 13,name: '餐饮美食'},
-                    {value: 23,name: '服饰美容'},
-                    {value: 13,name: '生活用品'},
-                    {value: 25,name: '日常缴费'},
-                    {value: 28,name: '交通出行'},
-                    {value: 235,name: '休闲娱乐'}
+                    {value: 80,name: '餐饮美食'},
+                    {value: 130,name: '服饰美容'},
+                    {value: 20,name: '生活用品'},
+                    {value: 10,name: '日常缴费'},
+                    {value: 69,name: '交通出行'},
+                    {value: 35,name: '休闲娱乐'}
                     ]},
             ] 
         };
@@ -103,18 +107,18 @@ export default {
         },
     },
     created() {
-        console.log(this.billClass[0].bill)
+        // console.log(this.billClass[0].bill)
     },
     mounted() {
         this.setLineOption(this.bill)
-        this.bills()
+        // this.bills()
     },
     methods: {
         bills () {
-            var _this = this 
-            for(let i in this.billClass){
-                _this.bill = billClass[index].bill
-            }
+            // var _this = this 
+            // for(let i in this.billClass){
+            //     _this.bill = billClass[index].bill
+            // }
         },
        setLineOption(bill) {
             this.timeLineOption = {
@@ -240,7 +244,6 @@ export default {
 
 <style scoped>
     .map-box{
-        width: 50%;
         min-height: 350px;
         margin: 0 15px;
     }

@@ -1,52 +1,59 @@
 <template>
   <div id="app">
-      <div class="head">
-        <div class="timer dj-flex" id="clock">{{ date}} - {{time}}</div>
-        <div class="head-left"><img src="./assets/images/head-left.png" alt=""></div>
-        <div class="header">{{ title }}</div>
-        <div class="head-right"><img src="./assets/images/head-right.png" alt=""></div>
-    </div>
-    <!-- <div class="data-nav">
-        <ul class="navs">
-            <li v-for = "(item,index) of nav" :key = index>
-                <router-link tag="a" 
-                to="item.path" 
-                exact-active-class="cur"
-                >
-                {{item.pathName}}
-                </router-link>
-            </li>
-        </ul>
-    </div> -->
-      <router-view/>
+      <!-- <div v-if="$route.meta.keepAlive"> -->
+        <!-- <nav v-show="$router.name!='login'"></nav> -->
+        <div class="login" v-show="$router.name!='login'">
+            <div class="head">
+            <div class="timer dj-flex" id="clock">{{ date}} - {{time}}</div>
+            <div class="head-left"><img src="./assets/images/head-left.png" alt=""></div>
+            <div class="header">{{ title }}</div>
+            <div class="head-right"><img src="./assets/images/head-right.png" alt=""></div>
+        </div>
+        <div class="data-nav">
+            <ul class="navs">
+                <li v-for = "(item,index) of nav" :key = index>
+                    <router-link tag="a" 
+                    to="item.path" 
+                    exact-active-class="cur"
+                    >
+                    {{item.pathName}}
+                    </router-link>
+                </li>
+            </ul>
+        </div>
+        </div>
+        
+        <router-view/>
+      <!-- </div> -->
+      <!-- <router-view v-if="!$route.meta.keepAlive"></router-view> -->
   </div>
 </template>
 
 <script>
-
+// import Nav from './components/Nav'
 export default {
-  components:{},
+//   components:{Nav},
   name: 'App',
   data() {
-      return {
-          title: "2019剁手记录",
-          date: '',
-          time:'',
-          nav:[
-              {"path" : "/","pathName" : "党建概况"},
-              {"path" : "/","pathName" : "党员发展"},
-              {"path" : "/","pathName" : "组织画像"},
-              {"path" : "/","pathName" : "支部活动"},
-              {"path" : "/","pathName" : "教育学习"},
-              {"path" : "/","pathName" : "党建月历"}
-          ],
-      };
+        return {
+            title: "2019剁手记录",
+            date: '',
+            time:'',
+            nav:[
+                {"path" : "/","pathName" : "党建概况"},
+                {"path" : "/","pathName" : "党员发展"},
+                {"path" : "/","pathName" : "组织画像"},
+                {"path" : "/","pathName" : "支部活动"},
+                {"path" : "/","pathName" : "教育学习"},
+                {"path" : "/","pathName" : "党建月历"}
+            ],
+        };
     },
-  created() {
+    created() {
       this.updateTime()
   },
-  methods:{
-     updateTime() {
+    methods:{
+        updateTime() {
             let _this = this;
 
             _this.date = new Date();
@@ -62,12 +69,12 @@ export default {
             }
             return (zero + num).slice(-digit);
         },
-  },
-  beforeDestroy() {
-      if (this.timer) {
-          clearInterval(this.timer); // 在Vue实例销毁前，清除我们的定时器
-      }
-  }
+    },
+    beforeDestroy() {
+        if (this.timer) {
+            clearInterval(this.timer); // 在Vue实例销毁前，清除我们的定时器
+        }
+    }
 }
 </script>
 

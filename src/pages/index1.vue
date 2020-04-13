@@ -20,17 +20,23 @@
                     <bill-class :billClass = billClass></bill-class>
                 </div>
             </el-col>
-            <el-col :span="11">
+            <el-col :span="12">
                 <map-echarts class="map-box map"></map-echarts>
             </el-col>
             <el-col :span="6">
-                <line-charts
-                 class="map-box map"
+                <!-- <line-charts class="map-right"
+                :loading="timeLoading"
+                :option="timeLineOption">
+                </line-charts> -->
+            </el-col>
+            <el-col :span="20">
+                <line-charts class="map-right"
                 :loading="timeLoading"
                 :option="timeLineOption">
                 </line-charts>
             </el-col>
         </el-row>
+        
     </el-main>
 </template>
 
@@ -58,7 +64,9 @@ export default {
                 {value: 25,name: '日常缴费'},
                 {value: 20,name: '交通出行'},
                 {value: 35,name: '休闲娱乐'}
-            ]
+            ],
+            yData2 : [13, 7, 10, 38, 17, 28, 22, 12, 28, 19, 14, 19],
+            xData : ["2019-01", "2019-02", "2019-03", "2019-04", "2019-05", "2019-06", "2019-07", "2019-08", "2019-09", "2019-10", "2019-11", "2019-12"],
         };
     },
     computed:{
@@ -79,120 +87,73 @@ export default {
     methods: {
         setLineOption() {
             this.timeLineOption = {
-                color: this.colors,
-                grid: {
-                    left: -100,
-                    top: 50,
-                    bottom: 10,
-                    right: 10,
-                    containLabel: true
-                },
                 tooltip: {
-                    trigger: 'item',
-                    formatter: "{b} : {c} ({d}%)"
-                },
-                polar: {},
-                angleAxis: {
-                    interval: 2,
-                    type: 'category',
-                    data: [],
-                    z: 10,
-                    axisLine: {
-                        show: false,
-                        
-                    },
-                    axisLabel: {
-                        interval: 0,
-                        show: true,
-                        color: "#0B4A6B",
-                        margin: 8,
-                        fontSize: 16
-                    },
-                },
-                radiusAxis: {
-                    show:false,
-                    min: 60,
-                    max: 120,
-                    interval: 20,
-                    axisLine: {
-                        show: false,
-                        lineStyle: {
-                            color: "#0B3E5E",
-                            width: 1,
-                            type: "solid"
-                        },
-                    },
-                    axisLabel: {
-                        formatter: '{value} %',
-                        show: false,
-                        padding: [0, 0, 20, 0],
-                        color: "#0B3E5E",
-                        fontSize: 16
-                    },
-                    splitLine: {
-                        lineStyle: {
-                            color: "#0B3E5E",
-                            width: 2,
-                            type: "solid",
-                        }
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'cross'
                     }
                 },
-                calculable: true,
-                series: [{
-                        name:'账单分类',
-                        type: 'pie',
-                        radius: ["15%", "30%"],
-                        hoverAnimation: false,
-                        labelLine: {
+                grid: {
+                    right: '5%',
+                    bottom: '10%',
+                    left: '2%',
+                    top: '50px',
+                    containLabel: true
+                },
+                xAxis: [{
+                    type: 'category',
+                    data: this.xData,
+                    axisLine: {
+                        lineStyle: {
+                            color: '#0B4CA9'
+                        }
+                    },
+                    axisTick: {
+                        show: false,
+                    },
+                    axisLabel: {
+                        show: true,
+                        textStyle: {
+                            color: "#d4ffff",
+                            fontSize: 14,
+                        },
+                    },
+                }],
+                yAxis: [{
+                    type: 'value',
+                    nameTextStyle: {
+                        color: '#d4ffff'
+                    },
+                    position: 'left',
+                    axisLine: {
+                        lineStyle: {
+                            color: '#0B4CA9'
+                        }
+                    },
+                    splitLine: {
+                        show:false,
+                    },
+                    axisLabel: {
+                        color: '#d4ffff',
+                        fontSize: 14,
+                    },
+                }, ],
+                series: [
+                    {
+                        name: '党组织数量',
+                        type: 'line',
+                        yAxisIndex: 0,
+                        // interval: 0,
+                        symbolSize: 12,
+                        itemStyle: {
                             normal: {
-                                show: false,
-                                length: 25,
-                                length2: 50
-                            },
-                            emphasis: {
-                                show: false
+                                color: '#0EF100',
                             }
                         },
-                        data: [{
-                            name: '',
-                            value: 0,
-                            itemStyle: {
-                                normal: {
-                                    color: "#0B4A6B"
-                                }
-                            }
-                        }]
-                    },{
-                        stack: 'a',
-                        type: 'pie',
-                        radius: ['20%', '80%'],
-                        roseType: 'area',
-                        zlevel:10,
-                        label: {
-                            normal: {
-                                show: true,
-                                formatter: "{b}"+"{c}",
-                                textStyle: {
-                                    fontSize: 12,
-                                },
-                                position: 'outside'
-                            },
-                            emphasis: {
-                                show: true
-                            }
-                        },
-                        labelLine: {
-                            normal: {
-                                show: true,
-                                length: 0,
-                                length2: 15
-                            },
-                            emphasis: {
-                                show: false
-                            }
-                        },
-                        data: this.billClass
-                    }, ]
+                        data: this.yData2
+                    }
+
+                ]   
             }
         },
     }

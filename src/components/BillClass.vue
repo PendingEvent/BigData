@@ -25,6 +25,7 @@ export default {
         }
     },
     mounted() {
+        // console.log(this.billClass)
         this.echartLoad();
         //实现自适应
         this.resizeEcharts = ()=>{

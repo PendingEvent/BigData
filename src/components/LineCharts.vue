@@ -1,8 +1,5 @@
 <template>
-    <div
-        :id="timeLine"
-        :style="{height:height,width:width}">
-    </div>
+    <div :id="timeLine"></div>
 </template>
 
 <script>
@@ -12,20 +9,7 @@ export default {
         timeLine: { // 折线图图表id
             type: String,
             default() {
-                // return 'line'
-                return 'pie'
-            }
-        },
-        height: { // 折线图高
-            type:String,
-            default() {
-                return '100%'
-            }
-        },
-        width: { // 折线图宽
-            type: String,
-            default() {
-                return '100%'
+                return 'line'
             }
         },
         option: { // 折线图配置
